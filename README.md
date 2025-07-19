@@ -17,7 +17,7 @@ python prompt_collector.py
 This ensures that:
 
 - All prompts are properly collected and structured
-- Rules defined in `.github/rules/rules.mdc` are followed
+- Rules defined in `.github/rules/rules.md` are followed
 - The workflow maintains consistency across all interactions
 - User input is captured according to the defined constraints
 
@@ -25,20 +25,20 @@ This ensures that:
 
 ### For Cursor and Tool-Supporting AI Agents
 
-- **`rules.mdc` MUST be used in every request** to any AI agent that supports tools
+- **`rules.md` MUST be used in every request** to any AI agent that supports tools
 - This file contains the behavioral rules and constraints that guide agent responses
-- Without loading `rules.mdc`, the agent won't follow the proper workflow
+- Without loading `rules.md`, the agent won't follow the proper workflow
 
 ### For GitHub Copilot Agents
 
-- **`prompt.md` file is used to force Copilot to run `prompt_collector.py` in every iteration**
+- **`cli-agent.prompt.md` file is used to force Copilot to run `prompt_collector.py` in every iteration**
 - This file contains instructions that automatically trigger the prompt collection workflow
 - It ensures consistent behavior across all Copilot interactions in the project
 
 ### Integration Strategy
 
 ```
-AI Agent Request → Load rules.mdc → Run prompt_collector.py → Follow workflow → Respond
+AI Agent Request → Load rules.md → Run prompt_collector.py → Follow workflow → Respond
 ```
 
 ## File Usage
@@ -46,8 +46,8 @@ AI Agent Request → Load rules.mdc → Run prompt_collector.py → Follow workf
 This is **not** a standalone project. Instead, users should:
 
 - Copy `prompt_collector.py` into the **root** of their own project
-- Place the rules file at `.github/rules/rules.mdc`
-- Place the AI agent instructions at `.github/prompt/prompt.md` (for Copilot)
+- Place the rules file at `.github/rules/rules.md`
+- Place the AI agent instructions at `.github/prompts/cli-agent.prompt.md` (for Copilot)
 
 ## Requirements
 
@@ -80,15 +80,15 @@ your-project/
   prompt_collector.py          # Main utility - ALWAYS RUN THIS FIRST
   .github/
       rules/
-          rules.mdc            # Workflow rules
-      prompt/
-          prompt.md            # AI agent instructions
+          rules.md            # Workflow rules
+      prompts/
+          cli-agent.prompt.md            # AI agent instructions
 ```
 
 ## How It Works
 
-- `rules.mdc`: Contains the logic and constraints for how the prompts should be interpreted. **AI agents with tool support must load this file in every request.**
-- `prompt.md`: Used by GitHub Copilot to automatically trigger `prompt_collector.py` in every iteration, ensuring consistent workflow.
+- `rules.md`: Contains the logic and constraints for how the prompts should be interpreted. **AI agents with tool support must load this file in every request.**
+- `cli-agent.prompt.md`: Used by GitHub Copilot to automatically trigger `prompt_collector.py` in every iteration, ensuring consistent workflow.
 - `prompt_collector.py`: **This script must be run before every task** to collect and structure prompts as per the defined rules
 
 ## Available Interfaces
@@ -138,17 +138,17 @@ The system automatically detects Arabic text and applies appropriate formatting:
 ## Workflow Rules
 
 1. **Always execute `prompt_collector.py` first** - This is mandatory for every task
-2. **AI agents must load `rules.mdc`** before responding to any request
-3. **Copilot must use `prompt.md`** to trigger prompt collection automatically
+2. **AI agents must load `rules.md`** before responding to any request
+3. **Copilot must use `cli-agent.prompt.md`** to trigger prompt collection automatically
 4. Follow the interactive prompts as they appear
-5. Respect the constraints defined in `rules.mdc`
+5. Respect the constraints defined in `rules.md`
 6. Use the collected prompts to guide subsequent AI agent interactions
 
 ## AI Agent Best Practices
 
-- **Cursor Users**: Always ensure your AI agent loads `.github/rules/rules.mdc` before processing any request
-- **Copilot Users**: The `prompt.md` file should automatically trigger the workflow - ensure it's properly placed
-- **Custom Agents**: Implement tool support to read `rules.mdc` and execute `prompt_collector.py`
+- **Cursor Users**: Always ensure your AI agent loads `.github/rules/rules.md` before processing any request
+- **Copilot Users**: The `cli-agent.prompt.md` file should automatically trigger the workflow - ensure it's properly placed
+- **Custom Agents**: Implement tool support to read `rules.md` and execute `prompt_collector.py`
 
 ## Notes
 
@@ -156,7 +156,7 @@ The system automatically detects Arabic text and applies appropriate formatting:
 - It's ideal for use with AI agents or developers who want to structure their prompts consistently
 - **Remember**: The workflow always begins with running `prompt_collector.py`
 - **Critical**: AI agents must respect and load the rule files to maintain workflow integrity
-- **Important**: The `prompt.md` file is essential for Copilot to function correctly in this setup
+- **Important**: The `cli-agent.prompt.md` file is essential for Copilot to function correctly in this setup
 - **Always ensure** that the rules and prompts are up-to-date to reflect your project's needs
 
 ---
