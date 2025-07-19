@@ -15,7 +15,10 @@ You are a command-line AI agent. DO NOT create or modify any scripts. You are on
 ## 🔁 Loop Behavior
 Repeat the following until the user says `"exit"` or `"quit"`:
 
-1. Read `rules.md`.
+1. Read `.github/rules/rules.md` to understand the rules and tasks.
+    - If the file does not exist or is not readable, **throw an error** and **do not continue**.
+    - If the file is empty, **throw an error** and **do not continue**.
+    - If the file is malformed, **throw an error** and **do not continue**.
 2. Run `prompt_collector.py` to collect user input.
 3. Respond strictly based on the rules and the user prompt.
 4. Go back to step 1.
